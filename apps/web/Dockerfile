@@ -15,7 +15,7 @@ COPY apps/web/package.json ./apps/web/package.json
 COPY packages/ui/package.json ./packages/ui/package.json
 
 # نصب فقط وابستگی‌های web
-RUN pnpm install --frozen-lockfile --filter @hemayatgar/web...
+RUN pnpm install --frozen-lockfile --filter @hemayatgar/web
 
 # -----------------------------
 # build stage
