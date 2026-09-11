@@ -14,7 +14,9 @@ COPY .npmrc pnpm-workspace.yaml package.json pnpm-lock.yaml* ./
 COPY apps/api/package.json apps/api/package.json
 COPY packages/database/package.json packages/database/package.json
 RUN pnpm config get registry \
-    && pnpm install --frozen-lockfile --filter @hemayatgar/api...
+    && pnpm install --frozen-lockfile --ignore-scripts --filter @hemayatgar/api... \
+    && pnpm approve-builds --all \
+    && pnpm rebuild --pending
 
 FROM base AS build
 COPY --from=deps /app /app

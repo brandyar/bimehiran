@@ -9,11 +9,3 @@ supportedArchitectures:
     - x64
   libc:
     - glibc
-
-onlyBuiltDependencies:
-  - "@prisma/client"
-  - "@prisma/engines"
-  - bcrypt
-  - esbuild
-  - prisma
-  - sharp

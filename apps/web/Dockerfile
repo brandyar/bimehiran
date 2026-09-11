@@ -14,7 +14,9 @@ COPY .npmrc pnpm-workspace.yaml package.json pnpm-lock.yaml* ./
 COPY apps/web/package.json apps/web/package.json
 COPY packages/ui/package.json packages/ui/package.json
 RUN pnpm config get registry \
-    && pnpm install --frozen-lockfile --filter @hemayatgar/web...
+    && pnpm install --frozen-lockfile --ignore-scripts --filter @hemayatgar/web... \
+    && pnpm approve-builds --all \
+    && pnpm rebuild --pending
 
 FROM base AS build
 COPY --from=deps /app /app
