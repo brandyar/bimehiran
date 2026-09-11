@@ -21,7 +21,14 @@ RUN pnpm config get registry \
 FROM base AS build
 COPY --from=deps /app /app
 COPY . .
-RUN cd packages/database && ./node_modules/.bin/prisma generate
+RUN attempts=0; \
+    until cd packages/database && ./node_modules/.bin/prisma generate; do \
+      attempts=$((attempts + 1)); \
+      if [ "$attempts" -ge 5 ]; then exit 1; fi; \
+      echo "Prisma engine download failed; retrying ($attempts/5)"; \
+      cd /app; \
+      sleep 10; \
+    done
 RUN cd apps/api && ./node_modules/.bin/tsc -p tsconfig.json
 
 FROM base AS runner

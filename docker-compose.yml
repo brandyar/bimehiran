@@ -16,6 +16,7 @@ services:
     build:
       context: .
       dockerfile: apps/api/Dockerfile
+      network: host
     restart: unless-stopped
     environment:
       DATABASE_URL: ${DATABASE_URL}
@@ -31,6 +32,7 @@ services:
     build:
       context: .
       dockerfile: apps/web/Dockerfile
+      network: host
     restart: unless-stopped
     environment:
       NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
