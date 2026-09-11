@@ -21,8 +21,8 @@ RUN pnpm config get registry \
 FROM base AS build
 COPY --from=deps /app /app
 COPY . .
-RUN pnpm --filter @hemayatgar/database prisma:generate
-RUN pnpm --filter @hemayatgar/api build
+RUN cd packages/database && ./node_modules/.bin/prisma generate
+RUN cd apps/api && ./node_modules/.bin/tsc -p tsconfig.json
 
 FROM base AS runner
 ENV NODE_ENV=production

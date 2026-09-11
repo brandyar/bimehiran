@@ -21,7 +21,7 @@ RUN pnpm config get registry \
 FROM base AS build
 COPY --from=deps /app /app
 COPY . .
-RUN pnpm --filter @hemayatgar/web build
+RUN cd apps/web && ./node_modules/.bin/next build
 
 FROM base AS runner
 ENV NODE_ENV=production
