@@ -14,7 +14,7 @@ services:
       context: .
       dockerfile: apps/api/Dockerfile
       args:
-        NPM_REGISTRY: ${NPM_REGISTRY:-https://package-mirror.liara.ir/repository/npm/}
+        NPM_REGISTRY: ${NPM_REGISTRY:-https://registry.npmmirror.com}
     restart: unless-stopped
     environment:
       DATABASE_URL: ${DATABASE_URL}
@@ -28,7 +28,7 @@ services:
       context: .
       dockerfile: apps/web/Dockerfile
       args:
-        NPM_REGISTRY: ${NPM_REGISTRY:-https://package-mirror.liara.ir/repository/npm/}
+        NPM_REGISTRY: ${NPM_REGISTRY:-https://registry.npmmirror.com}
     restart: unless-stopped
     environment:
       NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
