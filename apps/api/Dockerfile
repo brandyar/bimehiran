@@ -1,6 +1,9 @@
 FROM ghcr.io/pnpm/pnpm:11.19.0 AS pnpm-src
 
 FROM node:24-slim AS base
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends libatomic1 \
+    && rm -rf /var/lib/apt/lists/*
 COPY --from=pnpm-src /opt/pnpm/pnpm /usr/local/bin/pnpm
 ARG NPM_REGISTRY=https://package-mirror.liara.ir/repository/npm/
 ENV npm_config_registry=${NPM_REGISTRY}
