@@ -4,7 +4,7 @@ FROM node:24-slim AS base
 RUN apt-get update \
     && apt-get install -y --no-install-recommends libatomic1 \
     && rm -rf /var/lib/apt/lists/*
-COPY --from=pnpm-src /opt/pnpm/pnpm /usr/local/bin/pnpm
+COPY --from=pnpm-src /opt/pnpm/ /usr/local/bin/
 ARG NPM_REGISTRY=https://package-mirror.liara.ir/repository/npm/
 ENV npm_config_registry=${NPM_REGISTRY}
 ENV npm_config_fetch_retries=5
