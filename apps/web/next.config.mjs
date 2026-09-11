@@ -1,3 +1,5 @@
+import path from "node:path";
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -5,6 +7,10 @@ const nextConfig = {
   compress: true,
   images: {
     formats: ["image/avif", "image/webp"],
+  },
+  webpack(config) {
+    config.resolve.alias["@"] = path.resolve(process.cwd(), "src");
+    return config;
   },
   async headers() {
     return [
