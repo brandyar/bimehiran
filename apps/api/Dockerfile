@@ -5,6 +5,7 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends libatomic1 \
     && rm -rf /var/lib/apt/lists/*
 COPY --from=pnpm-src /opt/pnpm/ /usr/local/bin/
+ENV NODE_OPTIONS=--dns-result-order=ipv4first
 WORKDIR /app
 
 FROM base AS deps
