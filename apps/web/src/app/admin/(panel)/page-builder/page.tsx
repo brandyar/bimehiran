@@ -39,32 +39,36 @@ export default async function PageBuilderOverview() {
       </p>
 
       <div className="space-y-6">
-        {PAGES.map((p, idx) => (
-          <div key={p.slug} className="rounded-xl bg-white p-5 shadow-sm">
-            <h2 className="mb-3 font-semibold text-navy-800">{p.label}</h2>
-            {sectionsPerPage[idx].length === 0 ? (
+        {PAGES.map((p, idx) => {
+          const sections = sectionsPerPage[idx] ?? [];
+
+          return (
+            <div key={p.slug} className="rounded-xl bg-white p-5 shadow-sm">
+              <h2 className="mb-3 font-semibold text-navy-800">{p.label}</h2>
+              {sections.length === 0 ? (
               <p className="text-xs text-navy-400">هنوز بخش پویایی برای این صفحه اضافه نشده.</p>
-            ) : (
-              <div className="space-y-2">
-                {sectionsPerPage[idx].map((section) => (
-                  <div
-                    key={section.id}
-                    className="flex items-center justify-between rounded-lg bg-navy-50 px-3 py-2 text-sm"
-                  >
-                    <span>{TYPE_LABELS[section.type] ?? section.type}</span>
-                    <span
-                      className={`rounded-full px-2 py-0.5 text-xs ${
-                        section.isActive ? "bg-green-50 text-green-700" : "bg-gray-100 text-gray-500"
-                      }`}
+              ) : (
+                <div className="space-y-2">
+                  {sections.map((section) => (
+                    <div
+                      key={section.id}
+                      className="flex items-center justify-between rounded-lg bg-navy-50 px-3 py-2 text-sm"
                     >
-                      {section.isActive ? "فعال" : "غیرفعال"}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        ))}
+                      <span>{TYPE_LABELS[section.type] ?? section.type}</span>
+                      <span
+                        className={`rounded-full px-2 py-0.5 text-xs ${
+                          section.isActive ? "bg-green-50 text-green-700" : "bg-gray-100 text-gray-500"
+                        }`}
+                      >
+                        {section.isActive ? "فعال" : "غیرفعال"}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
     </div>
   );
