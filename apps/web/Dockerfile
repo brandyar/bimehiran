@@ -12,10 +12,11 @@ ENV npm_config_fetch_retry_maxtimeout=120000
 WORKDIR /app
 
 FROM base AS deps
-COPY pnpm-workspace.yaml package.json pnpm-lock.yaml* ./
+COPY .npmrc pnpm-workspace.yaml package.json pnpm-lock.yaml* ./
 COPY apps/web/package.json apps/web/package.json
 COPY packages/ui/package.json packages/ui/package.json
-RUN pnpm install --frozen-lockfile --filter @hemayatgar/web...
+RUN pnpm config get registry \
+    && pnpm install --frozen-lockfile --filter @hemayatgar/web...
 
 FROM base AS build
 COPY --from=deps /app /app
