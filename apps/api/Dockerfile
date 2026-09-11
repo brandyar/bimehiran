@@ -6,6 +6,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 COPY --from=pnpm-src /opt/pnpm/ /usr/local/bin/
 ENV NODE_OPTIONS=--dns-result-order=ipv4first
+RUN printf '%s\n' 'precedence ::ffff:0:0/96  100' >> /etc/gai.conf
 WORKDIR /app
 
 FROM base AS deps
