@@ -3,6 +3,8 @@ import { Vazirmatn, Noto_Naskh_Arabic } from "next/font/google";
 import "@/styles/globals.css";
 import { generatePaletteRgbString } from "@/lib/color-palette";
 
+export const dynamic = "force-dynamic";
+
 const vazirmatn = Vazirmatn({
   subsets: ["arabic"],
   variable: "--font-vazirmatn",
