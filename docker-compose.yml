@@ -13,10 +13,8 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
   api:
-    build:
-      context: .
-      dockerfile: apps/api/Dockerfile
-      network: host
+    image: hemayatgar-api:20260912
+    pull_policy: never
     restart: unless-stopped
     environment:
       DATABASE_URL: ${DATABASE_URL}
@@ -29,10 +27,8 @@ services:
       - uploads_data:/app/apps/api/uploads
 
   web:
-    build:
-      context: .
-      dockerfile: apps/web/Dockerfile
-      network: host
+    image: hemayatgar-web:20260912
+    pull_policy: never
     restart: unless-stopped
     environment:
       NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}

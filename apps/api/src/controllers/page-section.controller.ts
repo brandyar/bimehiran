@@ -1,5 +1,6 @@
 import type { Request, Response } from "express";
 import { z } from "zod";
+import type { Prisma } from "@hemayatgar/database";
 import {
   listPageSections,
   createPageSection,
@@ -40,7 +41,12 @@ export async function createSectionHandler(req: Request, res: Response) {
   if (!parsed.success) {
     return res.status(400).json({ message: "اطلاعات ورودی نامعتبر است", errors: parsed.error.flatten() });
   }
-  return res.status(201).json(await createPageSection(parsed.data));
+  return res.status(201).json(
+    await createPageSection({
+      ...parsed.data,
+      content: parsed.data.content as Prisma.InputJsonObject,
+    }),
+  );
 }
 
 export async function updateSectionHandler(req: Request, res: Response) {
@@ -48,7 +54,12 @@ export async function updateSectionHandler(req: Request, res: Response) {
   if (!parsed.success) {
     return res.status(400).json({ message: "اطلاعات ورودی نامعتبر است", errors: parsed.error.flatten() });
   }
-  return res.json(await updatePageSection(req.params.id, parsed.data));
+  return res.json(
+    await updatePageSection(req.params.id, {
+      ...parsed.data,
+      content: parsed.data.content as Prisma.InputJsonObject | undefined,
+    }),
+  );
 }
 
 export async function deleteSectionHandler(req: Request, res: Response) {

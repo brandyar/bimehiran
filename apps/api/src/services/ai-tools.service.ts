@@ -1,5 +1,6 @@
 import type Anthropic from "@anthropic-ai/sdk";
 import { prisma } from "@hemayatgar/database";
+import type { Prisma } from "@hemayatgar/database";
 import { createArticle, updateArticle, listArticles } from "./article.service";
 import { updatePage, getPageBySlug } from "./page.service";
 import { updateInsuranceSubsection } from "./insurance-subsection.service";
@@ -611,7 +612,7 @@ export async function executeAiTool(
       const section = await createPageSection({
         pageSlug: input.pageSlug as string,
         type: input.type as Parameters<typeof createPageSection>[0]["type"],
-        content: input.content as Record<string, unknown>,
+        content: input.content as Prisma.InputJsonObject,
         order: input.order as number | undefined,
       });
       return { success: true, id: section.id };
@@ -619,7 +620,7 @@ export async function executeAiTool(
 
     case "update_page_section": {
       await updatePageSection(input.sectionId as string, {
-        content: input.content as Record<string, unknown> | undefined,
+        content: input.content as Prisma.InputJsonObject | undefined,
         isActive: input.isActive as boolean | undefined,
       });
       return { success: true };

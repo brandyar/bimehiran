@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import crypto from "node:crypto";
 import jwt from "jsonwebtoken";
+import type { SignOptions } from "jsonwebtoken";
 import { prisma } from "@hemayatgar/database";
 import { env } from "../config/env";
 
@@ -56,7 +57,9 @@ export async function login(email: string, password: string) {
     roleName: adminUser.role.name,
   };
 
-  const token = jwt.sign(payload, env.JWT_SECRET, { expiresIn: env.JWT_EXPIRES_IN });
+  const token = jwt.sign(payload, env.JWT_SECRET, {
+    expiresIn: env.JWT_EXPIRES_IN as SignOptions["expiresIn"],
+  });
 
   await prisma.adminUser.update({
     where: { id: adminUser.id },
